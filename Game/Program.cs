@@ -14,9 +14,21 @@ foreach (var (p1, p2) in games)
    Console.WriteLine($"Player 2 {p2.Name}");
    p1.Reset();
    p2.Reset();
-   var results = PlayGame(p1, p2).Select(Calculate);
-   var p1Result = results.Sum(r => r.Item1);
-   var p2Result = results.Sum(r => r.Item2);
+   var p1Result = 0;
+   var p2Result = 0;
+   for (int i = 0; i < 5; i++)
+   {
+       var results = PlayGame(p1, p2).Select(Calculate);
+       var p1R = results.Sum(r => r.Item1);
+       var p2R = results.Sum(r => r.Item2);
+       Console.WriteLine($"Player 1 Game Total = {p1R}");
+       Console.WriteLine($"Player 2 Game Total = {p2R}");
+       p1Result += p1R;
+       p2Result += p2R;
+       p1.Reset();
+       p2.Reset();
+   }
+   
    Console.WriteLine($"Player 1 Total = {p1Result}");
    Console.WriteLine($"Player 2 Total = {p2Result}");
    Console.WriteLine(p1Result > p2Result ? "Player 1 Wins" : p1Result < p2Result ? "Player 2 Wins" : "We are all tied."  );
@@ -30,12 +42,7 @@ IEnumerable<(T, T)> CreateGames<T>(List<T> list) where T: class
     {
         for (int j = 0; j < list.Count - 1; j++)
         {
-            var a = list[i];
-            var b = list[j + 1];
-            if (a != b)
-            {
-                l.Add((list[i], list[j + 1]));
-            }
+            l.Add((list[i], list[j + 1]));
         }
     }
     
@@ -47,8 +54,9 @@ IEnumerable<Result> PlayGame(Player p1, Player p2)
     var plays = new List<Result>();
     bool? p1Result = null;
     bool? p2Result = null;
+    var random = new Random();
 
-    for (int i = 0; i < 100_000; i++)
+    for (int i = 0; i < random.Next(1000, 100_000); i++)
     {
         var temp1 = p1Result;
         p1Result = p1.Go(p2Result);

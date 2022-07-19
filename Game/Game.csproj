@@ -9,4 +9,9 @@
         <RootNamespace>ConsoleApp3</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="Dockerfile" />
+      <None Remove=".dockerignore" />
+    </ItemGroup>
+
 </Project>
