@@ -12,8 +12,6 @@ foreach (var (p1, p2) in games)
 {
    Console.WriteLine($"Player 1 {p1.Name}");
    Console.WriteLine($"Player 2 {p2.Name}");
-   p1.Reset();
-   p2.Reset();
    var p1Result = 0;
    var p2Result = 0;
    for (int i = 0; i < 5; i++)
